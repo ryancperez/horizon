@@ -1,0 +1,435 @@
+/* ==================================================================
+   Bagger Tools — global styles
+   Layout and sizing mirror YouTube's masthead + guide (sidebar).
+   ================================================================== */
+
+:root {
+  --bg: #EAE0CF;
+  --text: #111844;
+  --text-muted: #606060;
+  --hover: rgb(114, 136, 174, 0.5);
+  --active: rgba(114, 136, 174, 0.5);
+  --pressed: rgba(114, 136, 174, 0.1);
+  --divider: rgba(114, 136, 174, 0.1);
+  --scrim: rgba(0, 0, 0, 0.5);
+  --focus: #065fd4;
+  --brand: #0f0f0f;
+  --brand-contrast: #ffffff;
+  --bg-page-header: #d8cbb6;
+
+  --masthead-h: 56px;
+  --guide-w: 240px;
+  --mini-w: 72px;
+
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #111844;
+    --text: #EAE0CF;
+    --text-muted: #aaaaaa;
+    --hover: rgba(255, 255, 255, 0.1);
+    --active: rgba(255, 255, 255, 0.1);
+    --pressed: rgba(255, 255, 255, 0.2);
+    --divider: rgba(255, 255, 255, 0.2);
+    --focus: #3ea6ff;
+    --brand: #f1f1f1;
+    --brand-contrast: #0f0f0f;
+    --bg-page-header: #111844;
+    color-scheme: dark;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#app {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Roboto', 'Arial', sans-serif;
+  font-size: 14px;
+  line-height: 1.43;
+  -webkit-font-smoothing: antialiased;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: -2px;
+}
+
+/* Material Symbols — outlined by default, filled when active */
+.icon {
+  font-size: 24px;
+  width: 24px;
+  height: 24px;
+  flex: none;
+  font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+}
+
+/* ------------------------------------------------------------------
+   Masthead (top bar)
+   ------------------------------------------------------------------ */
+
+.masthead {
+  position: fixed;
+  inset: 0 0 auto 0;
+  height: var(--masthead-h);
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  background: var(--bg);
+  z-index: 30;
+}
+
+.header-start {
+  display: flex;
+  align-items: center;
+  height: var(--masthead-h);
+}
+
+.icon-button {
+  width: 40px;
+  height: 40px;
+  padding: 8px;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.icon-button:hover {
+  background: var(--hover);
+}
+.icon-button:active {
+  background: var(--pressed);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 40px;
+  padding: 0 14px 0 16px;
+}
+.logo-mark {
+  width: 28px;
+  height: 20px;
+  border-radius: 6px;
+  background: var(--brand);
+  color: var(--brand-contrast);
+  font-weight: 700;
+  font-size: 13px;
+  display: grid;
+  place-items: center;
+}
+.logo-text {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.6px;
+  white-space: nowrap;
+}
+
+/* ------------------------------------------------------------------
+   Persistent guide container (full or mini)
+   ------------------------------------------------------------------ */
+
+.guide-persistent {
+  position: fixed;
+  top: var(--masthead-h);
+  bottom: 0;
+  left: 0;
+  z-index: 20;
+  background: var(--bg);
+}
+[data-guide='full'] .guide-persistent {
+  width: var(--guide-w);
+}
+[data-guide='mini'] .guide-persistent {
+  width: var(--mini-w);
+}
+
+/* ------------------------------------------------------------------
+   Full guide (240px)
+   ------------------------------------------------------------------ */
+
+.guide-full {
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-bottom: 16px;
+  /* Scrollbar only shows on hover, like YouTube */
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+.guide-full:hover {
+  scrollbar-color: #aaa transparent;
+}
+
+.guide-section {
+  padding: 12px;
+}
+
+.guide-divider {
+  border: 0;
+  border-top: 1px solid var(--divider);
+  margin: 0 12px;
+}
+
+.guide-item {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  height: 40px;
+  padding: 0 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.guide-item:hover {
+  background: var(--hover);
+}
+.guide-item:active {
+  background: var(--pressed);
+}
+.guide-item[data-status='active'] {
+  background: var(--active);
+  font-weight: 500;
+}
+.guide-item[data-status='active']:hover {
+  background: var(--pressed);
+}
+.guide-item[data-status='active'] .icon,
+.mini-item[data-status='active'] .icon {
+  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+.guide-label {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Parent row with an expand/collapse chevron */
+.guide-parent {
+  position: relative;
+}
+.guide-parent .guide-item {
+  padding-right: 44px;
+}
+.guide-expand {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 32px;
+  height: 32px;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+}
+.guide-expand:hover {
+  background: var(--hover);
+}
+.guide-expand .icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+  transition: transform 0.2s ease;
+}
+.guide-expand[aria-expanded='true'] .icon {
+  transform: rotate(180deg);
+}
+
+/* Sub navigation links — indented under the parent with a guide line */
+.guide-sublist {
+  margin-left: 24px;
+  padding-left: 8px;
+  border-left: 1px solid var(--divider);
+}
+.guide-subitem {
+  height: 36px;
+}
+
+/* Collapsed parent whose child page is open */
+.guide-parent[data-child-active] .guide-item {
+  background: var(--active);
+  font-weight: 500;
+}
+.guide-parent[data-child-active] .guide-item .icon {
+  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+.guide-footer {
+  padding: 16px 24px 0;
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+/* ------------------------------------------------------------------
+   Mini guide (72px)
+   ------------------------------------------------------------------ */
+
+.guide-mini {
+  height: 100%;
+  padding: 4px 4px 0;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.mini-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 64px;
+  padding: 16px 0 14px;
+  border-radius: 10px;
+}
+.mini-item:hover {
+  background: var(--hover);
+}
+.mini-item:active {
+  background: var(--pressed);
+}
+.mini-item .icon {
+  margin-bottom: 6px;
+}
+.mini-label {
+  font-size: 10px;
+  line-height: 14px;
+  max-width: 100%;
+  padding: 0 2px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ------------------------------------------------------------------
+   Overlay drawer (narrow screens, or medium screens via hamburger)
+   ------------------------------------------------------------------ */
+
+.drawer {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  pointer-events: none;
+}
+.drawer.is-open {
+  pointer-events: auto;
+}
+
+.drawer-scrim {
+  position: absolute;
+  inset: 0;
+  background: var(--scrim);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.drawer.is-open .drawer-scrim {
+  opacity: 1;
+}
+
+.drawer-panel {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: var(--guide-w);
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  transform: translateX(-100%);
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.drawer.is-open .drawer-panel {
+  transform: translateX(0);
+}
+.drawer-header {
+  flex: none;
+  padding: 0 16px;
+}
+.drawer-panel .guide-full {
+  flex: 1;
+  min-height: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .drawer-scrim,
+  .drawer-panel,
+  .guide-expand .icon {
+    transition: none;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Page content
+   ------------------------------------------------------------------ */
+
+.page {
+  padding: calc(var(--masthead-h) + 24px) 24px 24px;
+}
+[data-guide='full'] .page {
+  margin-left: var(--guide-w);
+}
+[data-guide='mini'] .page {
+  margin-left: var(--mini-w);
+}
+
+.page-header h1 {
+  margin: 4px;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 32px;
+}
+
+.page-header-div {
+  display: flex;
+  justify-content: center; /* Centers horizontally */
+  align-items: center;
+  background-color: var(--bg-page-header);
+  border-radius: .5rem;    /* Centers vertically */
+  box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.15);
+  border-color: var(--text);
+  margin-bottom: 5px;
+}
+
+.muted {
+  color: var(--text-muted);
+  margin: 0;
+}
+
+@media (max-width: 791px) {
+  .page {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
