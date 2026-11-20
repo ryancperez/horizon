@@ -1,6 +1,9 @@
 import { useCallback, useEffect, useState } from 'react'
 import type { ReactNode } from 'react'
 import { useRouterState } from '@tanstack/react-router'
+import type { User } from '@supabase/supabase-js'
+
+import { AccountMenu } from './AccountMenu'
 
 import { GuideDrawer, GuideFull, GuideMini, Logo, MenuButton } from './sideBar'
 import { useMediaQuery } from './useMediaQuery'
@@ -18,29 +21,33 @@ function readStoredOpen(): boolean {
   }
 }
 
-export function AppLayout({ children }: { children: ReactNode }) {
+export function AppLayout({ children, user }: { children: ReactNode; user: User }) {
   const isWide = useMediaQuery(WIDE)
   const isMedium = useMediaQuery(MEDIUM)
-  const [guideOpen, setGuideOpen] = useState(readStoredOpen)
+  // Start expanded on the server, then apply the saved choice in the browser.
+  const [guideOpen, setGuideOpen] = useState(true)
   const [drawerOpen, setDrawerOpen] = useState(false)
   const pathname = useRouterState({ select: (s) => s.location.pathname })
 
+  useEffect(() => setGuideOpen(readStoredOpen()), [])
+
   // Remember the expanded/collapsed choice, like YouTube does.
-  useEffect(() => {
+  const saveGuideOpen = useCallback((open: boolean) => {
+    setGuideOpen(open)
     try {
-      localStorage.setItem(STORAGE_KEY, String(guideOpen))
+      localStorage.setItem(STORAGE_KEY, String(open))
     } catch {
       /* storage unavailable */
     }
-  }, [guideOpen])
+  }, [])
 
   // Close the overlay drawer after navigating or when the window gets wide.
   useEffect(() => setDrawerOpen(false), [pathname, isWide])
 
   const toggle = useCallback(() => {
-    if (isWide) setGuideOpen((v) => !v)
+    if (isWide) saveGuideOpen(!guideOpen)
     else setDrawerOpen((v) => !v)
-  }, [isWide])
+  }, [isWide, guideOpen, saveGuideOpen])
   const closeDrawer = useCallback(() => setDrawerOpen(false), [])
 
   const mode = isWide ? (guideOpen ? 'full' : 'mini') : isMedium ? 'mini' : 'none'
@@ -51,6 +58,9 @@ export function AppLayout({ children }: { children: ReactNode }) {
         <div className="header-start">
           <MenuButton onClick={toggle} label="Toggle navigation" />
           <Logo />
+        </div>
+        <div className="header-end">
+          <AccountMenu user={user} />
         </div>
       </header>
 

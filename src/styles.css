@@ -3,6 +3,11 @@
    Layout and sizing mirror YouTube's masthead + guide (sidebar).
    ================================================================== */
 
+@import '@fontsource/roboto/400.css';
+@import '@fontsource/roboto/500.css';
+@import '@fontsource/roboto/700.css';
+@import 'material-symbols/outlined.css';
+
 :root {
   --bg: #EAE0CF;
   --text: #111844;
@@ -61,20 +66,24 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
+/* Element resets live in the "base" layer so Tailwind utility classes
+   (used by the shadcn login components) can still override them. */
+@layer base {
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
 
-button {
-  font: inherit;
-  color: inherit;
+  button {
+    font: inherit;
+    color: inherit;
+  }
 }
 
 :focus-visible {
@@ -154,6 +163,108 @@ button {
   font-weight: 700;
   letter-spacing: -0.6px;
   white-space: nowrap;
+}
+
+/* ------------------------------------------------------------------
+   Account menu (top right)
+   ------------------------------------------------------------------ */
+
+.header-end {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+}
+
+.account {
+  position: relative;
+}
+
+.avatar-button {
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--text);
+  color: var(--bg);
+  font-weight: 500;
+  font-size: 15px;
+  display: grid;
+  place-items: center;
+  flex: none;
+}
+.avatar-lg {
+  width: 40px;
+  height: 40px;
+  font-size: 18px;
+}
+
+.account-menu {
+  position: absolute;
+  top: 44px;
+  right: 0;
+  width: 280px;
+  padding: 8px 0;
+  border-radius: 12px;
+  background: var(--bg);
+  box-shadow: 0 4px 32px 0 rgba(0, 0, 0, 0.15);
+  z-index: 50;
+}
+
+.account-header {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  padding: 8px 16px 12px;
+}
+.account-names {
+  min-width: 0;
+}
+.account-name {
+  font-size: 16px;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.account-email {
+  color: var(--text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.account-menu .guide-divider {
+  margin: 0 0 8px;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  height: 40px;
+  padding: 0 16px;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+}
+.menu-item:hover {
+  background: var(--hover);
+}
+.menu-item:disabled {
+  cursor: default;
+  opacity: 0.6;
 }
 
 /* ------------------------------------------------------------------

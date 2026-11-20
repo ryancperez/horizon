@@ -1,0 +1,85 @@
+/*
+  Tailwind + shadcn/ui theme. Only the shadcn components (login card, buttons)
+  use this; the rest of the app is styled by styles.css.
+  Colors follow the Bagger Tools palette in styles.css.
+*/
+@import 'tailwindcss';
+
+/* Match the app: dark mode follows the operating system setting. */
+@custom-variant dark (@media (prefers-color-scheme: dark));
+
+:root {
+  --radius: 0.625rem;
+  --background: #eae0cf;
+  --foreground: #111844;
+  --card: #f4ede2;
+  --card-foreground: #111844;
+  --popover: #f4ede2;
+  --popover-foreground: #111844;
+  --primary: #111844;
+  --primary-foreground: #eae0cf;
+  --secondary: #d8cbb6;
+  --secondary-foreground: #111844;
+  --muted: #d8cbb6;
+  --muted-foreground: #4a5072;
+  --accent: rgba(114, 136, 174, 0.3);
+  --accent-foreground: #111844;
+  --destructive: #c0262d;
+  --border: rgba(17, 24, 68, 0.15);
+  --input: rgba(17, 24, 68, 0.2);
+  --ring: #7288ae;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #111844;
+    --foreground: #eae0cf;
+    --card: #1a2257;
+    --card-foreground: #eae0cf;
+    --popover: #1a2257;
+    --popover-foreground: #eae0cf;
+    --primary: #eae0cf;
+    --primary-foreground: #111844;
+    --secondary: #222b63;
+    --secondary-foreground: #eae0cf;
+    --muted: #222b63;
+    --muted-foreground: #a9b0cf;
+    --accent: rgba(114, 136, 174, 0.3);
+    --accent-foreground: #eae0cf;
+    --destructive: #f26a6f;
+    --border: rgba(234, 224, 207, 0.15);
+    --input: rgba(234, 224, 207, 0.2);
+    --ring: #7288ae;
+  }
+}
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+}

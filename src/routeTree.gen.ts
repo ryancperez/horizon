@@ -10,115 +10,158 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as DashboardRouteImport } from './routes/dashboard'
-import { Route as OrdersRouteImport } from './routes/orders'
-import { Route as SettingsRouteImport } from './routes/settings'
-import { Route as TeamStoreIndexRouteImport } from './routes/team-store/index'
-import { Route as TeamStoreCreateRouteImport } from './routes/team-store/create'
-import { Route as TeamStoreCreateItemRouteImport } from './routes/team-store/create-item'
+import { Route as ProtectedRouteImport } from './routes/_protected'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as ProtectedDashboardRouteImport } from './routes/_protected/dashboard'
+import { Route as ProtectedOrdersRouteImport } from './routes/_protected/orders'
+import { Route as ProtectedSettingsRouteImport } from './routes/_protected/settings'
+import { Route as AuthConfirmRouteImport } from './routes/auth/confirm'
+import { Route as AuthErrorRouteImport } from './routes/auth/error'
+import { Route as ProtectedTeamStoreIndexRouteImport } from './routes/_protected/team-store/index'
+import { Route as ProtectedTeamStoreCreateRouteImport } from './routes/_protected/team-store/create'
+import { Route as ProtectedTeamStoreCreateItemRouteImport } from './routes/_protected/team-store/create-item'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const DashboardRoute = DashboardRouteImport.update({
+const ProtectedRoute = ProtectedRouteImport.update({
+  id: '/_protected',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProtectedDashboardRoute = ProtectedDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => ProtectedRoute,
 } as any)
-const OrdersRoute = OrdersRouteImport.update({
+const ProtectedOrdersRoute = ProtectedOrdersRouteImport.update({
   id: '/orders',
   path: '/orders',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => ProtectedRoute,
 } as any)
-const SettingsRoute = SettingsRouteImport.update({
+const ProtectedSettingsRoute = ProtectedSettingsRouteImport.update({
   id: '/settings',
   path: '/settings',
+  getParentRoute: () => ProtectedRoute,
+} as any)
+const AuthConfirmRoute = AuthConfirmRouteImport.update({
+  id: '/auth/confirm',
+  path: '/auth/confirm',
   getParentRoute: () => rootRouteImport,
 } as any)
-const TeamStoreIndexRoute = TeamStoreIndexRouteImport.update({
+const AuthErrorRoute = AuthErrorRouteImport.update({
+  id: '/auth/error',
+  path: '/auth/error',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProtectedTeamStoreIndexRoute = ProtectedTeamStoreIndexRouteImport.update({
   id: '/team-store/',
   path: '/team-store/',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => ProtectedRoute,
 } as any)
-const TeamStoreCreateRoute = TeamStoreCreateRouteImport.update({
-  id: '/team-store/create',
-  path: '/team-store/create',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const TeamStoreCreateItemRoute = TeamStoreCreateItemRouteImport.update({
-  id: '/team-store/create-item',
-  path: '/team-store/create-item',
-  getParentRoute: () => rootRouteImport,
-} as any)
+const ProtectedTeamStoreCreateRoute =
+  ProtectedTeamStoreCreateRouteImport.update({
+    id: '/team-store/create',
+    path: '/team-store/create',
+    getParentRoute: () => ProtectedRoute,
+  } as any)
+const ProtectedTeamStoreCreateItemRoute =
+  ProtectedTeamStoreCreateItemRouteImport.update({
+    id: '/team-store/create-item',
+    path: '/team-store/create-item',
+    getParentRoute: () => ProtectedRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/dashboard': typeof DashboardRoute
-  '/orders': typeof OrdersRoute
-  '/settings': typeof SettingsRoute
-  '/team-store/create': typeof TeamStoreCreateRoute
-  '/team-store/create-item': typeof TeamStoreCreateItemRoute
-  '/team-store/': typeof TeamStoreIndexRoute
+  '/login': typeof LoginRoute
+  '/dashboard': typeof ProtectedDashboardRoute
+  '/orders': typeof ProtectedOrdersRoute
+  '/settings': typeof ProtectedSettingsRoute
+  '/auth/confirm': typeof AuthConfirmRoute
+  '/auth/error': typeof AuthErrorRoute
+  '/team-store/create': typeof ProtectedTeamStoreCreateRoute
+  '/team-store/create-item': typeof ProtectedTeamStoreCreateItemRoute
+  '/team-store/': typeof ProtectedTeamStoreIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/dashboard': typeof DashboardRoute
-  '/orders': typeof OrdersRoute
-  '/settings': typeof SettingsRoute
-  '/team-store/create': typeof TeamStoreCreateRoute
-  '/team-store/create-item': typeof TeamStoreCreateItemRoute
-  '/team-store': typeof TeamStoreIndexRoute
+  '/login': typeof LoginRoute
+  '/dashboard': typeof ProtectedDashboardRoute
+  '/orders': typeof ProtectedOrdersRoute
+  '/settings': typeof ProtectedSettingsRoute
+  '/auth/confirm': typeof AuthConfirmRoute
+  '/auth/error': typeof AuthErrorRoute
+  '/team-store/create': typeof ProtectedTeamStoreCreateRoute
+  '/team-store/create-item': typeof ProtectedTeamStoreCreateItemRoute
+  '/team-store': typeof ProtectedTeamStoreIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/dashboard': typeof DashboardRoute
-  '/orders': typeof OrdersRoute
-  '/settings': typeof SettingsRoute
-  '/team-store/create': typeof TeamStoreCreateRoute
-  '/team-store/create-item': typeof TeamStoreCreateItemRoute
-  '/team-store/': typeof TeamStoreIndexRoute
+  '/_protected': typeof ProtectedRouteWithChildren
+  '/login': typeof LoginRoute
+  '/_protected/dashboard': typeof ProtectedDashboardRoute
+  '/_protected/orders': typeof ProtectedOrdersRoute
+  '/_protected/settings': typeof ProtectedSettingsRoute
+  '/auth/confirm': typeof AuthConfirmRoute
+  '/auth/error': typeof AuthErrorRoute
+  '/_protected/team-store/create': typeof ProtectedTeamStoreCreateRoute
+  '/_protected/team-store/create-item': typeof ProtectedTeamStoreCreateItemRoute
+  '/_protected/team-store/': typeof ProtectedTeamStoreIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/login'
     | '/dashboard'
     | '/orders'
     | '/settings'
+    | '/auth/confirm'
+    | '/auth/error'
     | '/team-store/create'
     | '/team-store/create-item'
     | '/team-store/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/login'
     | '/dashboard'
     | '/orders'
     | '/settings'
+    | '/auth/confirm'
+    | '/auth/error'
     | '/team-store/create'
     | '/team-store/create-item'
     | '/team-store'
   id:
     | '__root__'
     | '/'
-    | '/dashboard'
-    | '/orders'
-    | '/settings'
-    | '/team-store/create'
-    | '/team-store/create-item'
-    | '/team-store/'
+    | '/_protected'
+    | '/login'
+    | '/_protected/dashboard'
+    | '/_protected/orders'
+    | '/_protected/settings'
+    | '/auth/confirm'
+    | '/auth/error'
+    | '/_protected/team-store/create'
+    | '/_protected/team-store/create-item'
+    | '/_protected/team-store/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  DashboardRoute: typeof DashboardRoute
-  OrdersRoute: typeof OrdersRoute
-  SettingsRoute: typeof SettingsRoute
-  TeamStoreCreateRoute: typeof TeamStoreCreateRoute
-  TeamStoreCreateItemRoute: typeof TeamStoreCreateItemRoute
-  TeamStoreIndexRoute: typeof TeamStoreIndexRoute
+  ProtectedRoute: typeof ProtectedRouteWithChildren
+  LoginRoute: typeof LoginRoute
+  AuthConfirmRoute: typeof AuthConfirmRoute
+  AuthErrorRoute: typeof AuthErrorRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -130,60 +173,117 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/dashboard': {
-      id: '/dashboard'
+    '/_protected': {
+      id: '/_protected'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof ProtectedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_protected/dashboard': {
+      id: '/_protected/dashboard'
       path: '/dashboard'
       fullPath: '/dashboard'
-      preLoaderRoute: typeof DashboardRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof ProtectedDashboardRouteImport
+      parentRoute: typeof ProtectedRoute
     }
-    '/orders': {
-      id: '/orders'
+    '/_protected/orders': {
+      id: '/_protected/orders'
       path: '/orders'
       fullPath: '/orders'
-      preLoaderRoute: typeof OrdersRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof ProtectedOrdersRouteImport
+      parentRoute: typeof ProtectedRoute
     }
-    '/settings': {
-      id: '/settings'
+    '/_protected/settings': {
+      id: '/_protected/settings'
       path: '/settings'
       fullPath: '/settings'
-      preLoaderRoute: typeof SettingsRouteImport
+      preLoaderRoute: typeof ProtectedSettingsRouteImport
+      parentRoute: typeof ProtectedRoute
+    }
+    '/auth/confirm': {
+      id: '/auth/confirm'
+      path: '/auth/confirm'
+      fullPath: '/auth/confirm'
+      preLoaderRoute: typeof AuthConfirmRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/team-store/': {
-      id: '/team-store/'
+    '/auth/error': {
+      id: '/auth/error'
+      path: '/auth/error'
+      fullPath: '/auth/error'
+      preLoaderRoute: typeof AuthErrorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_protected/team-store/': {
+      id: '/_protected/team-store/'
       path: '/team-store'
       fullPath: '/team-store/'
-      preLoaderRoute: typeof TeamStoreIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof ProtectedTeamStoreIndexRouteImport
+      parentRoute: typeof ProtectedRoute
     }
-    '/team-store/create': {
-      id: '/team-store/create'
+    '/_protected/team-store/create': {
+      id: '/_protected/team-store/create'
       path: '/team-store/create'
       fullPath: '/team-store/create'
-      preLoaderRoute: typeof TeamStoreCreateRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof ProtectedTeamStoreCreateRouteImport
+      parentRoute: typeof ProtectedRoute
     }
-    '/team-store/create-item': {
-      id: '/team-store/create-item'
+    '/_protected/team-store/create-item': {
+      id: '/_protected/team-store/create-item'
       path: '/team-store/create-item'
       fullPath: '/team-store/create-item'
-      preLoaderRoute: typeof TeamStoreCreateItemRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof ProtectedTeamStoreCreateItemRouteImport
+      parentRoute: typeof ProtectedRoute
     }
   }
 }
 
+interface ProtectedRouteChildren {
+  ProtectedDashboardRoute: typeof ProtectedDashboardRoute
+  ProtectedOrdersRoute: typeof ProtectedOrdersRoute
+  ProtectedSettingsRoute: typeof ProtectedSettingsRoute
+  ProtectedTeamStoreCreateRoute: typeof ProtectedTeamStoreCreateRoute
+  ProtectedTeamStoreCreateItemRoute: typeof ProtectedTeamStoreCreateItemRoute
+  ProtectedTeamStoreIndexRoute: typeof ProtectedTeamStoreIndexRoute
+}
+
+const ProtectedRouteChildren: ProtectedRouteChildren = {
+  ProtectedDashboardRoute: ProtectedDashboardRoute,
+  ProtectedOrdersRoute: ProtectedOrdersRoute,
+  ProtectedSettingsRoute: ProtectedSettingsRoute,
+  ProtectedTeamStoreCreateRoute: ProtectedTeamStoreCreateRoute,
+  ProtectedTeamStoreCreateItemRoute: ProtectedTeamStoreCreateItemRoute,
+  ProtectedTeamStoreIndexRoute: ProtectedTeamStoreIndexRoute,
+}
+
+const ProtectedRouteWithChildren = ProtectedRoute._addFileChildren(
+  ProtectedRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  DashboardRoute: DashboardRoute,
-  OrdersRoute: OrdersRoute,
-  SettingsRoute: SettingsRoute,
-  TeamStoreCreateRoute: TeamStoreCreateRoute,
-  TeamStoreCreateItemRoute: TeamStoreCreateItemRoute,
-  TeamStoreIndexRoute: TeamStoreIndexRoute,
+  ProtectedRoute: ProtectedRouteWithChildren,
+  LoginRoute: LoginRoute,
+  AuthConfirmRoute: AuthConfirmRoute,
+  AuthErrorRoute: AuthErrorRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { createStart } from '@tanstack/react-start'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+  }
+}
