@@ -15,6 +15,7 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as ProtectedDashboardRouteImport } from './routes/_protected/dashboard'
 import { Route as ProtectedOrdersRouteImport } from './routes/_protected/orders'
 import { Route as ProtectedSettingsRouteImport } from './routes/_protected/settings'
+import { Route as ProtectedToolsRouteImport } from './routes/_protected/tools'
 import { Route as AuthConfirmRouteImport } from './routes/auth/confirm'
 import { Route as AuthErrorRouteImport } from './routes/auth/error'
 import { Route as ProtectedTeamStoreIndexRouteImport } from './routes/_protected/team-store/index'
@@ -48,6 +49,11 @@ const ProtectedOrdersRoute = ProtectedOrdersRouteImport.update({
 const ProtectedSettingsRoute = ProtectedSettingsRouteImport.update({
   id: '/settings',
   path: '/settings',
+  getParentRoute: () => ProtectedRoute,
+} as any)
+const ProtectedToolsRoute = ProtectedToolsRouteImport.update({
+  id: '/tools',
+  path: '/tools',
   getParentRoute: () => ProtectedRoute,
 } as any)
 const AuthConfirmRoute = AuthConfirmRouteImport.update({
@@ -84,6 +90,7 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof ProtectedDashboardRoute
   '/orders': typeof ProtectedOrdersRoute
   '/settings': typeof ProtectedSettingsRoute
+  '/tools': typeof ProtectedToolsRoute
   '/auth/confirm': typeof AuthConfirmRoute
   '/auth/error': typeof AuthErrorRoute
   '/team-store/create': typeof ProtectedTeamStoreCreateRoute
@@ -96,6 +103,7 @@ export interface FileRoutesByTo {
   '/dashboard': typeof ProtectedDashboardRoute
   '/orders': typeof ProtectedOrdersRoute
   '/settings': typeof ProtectedSettingsRoute
+  '/tools': typeof ProtectedToolsRoute
   '/auth/confirm': typeof AuthConfirmRoute
   '/auth/error': typeof AuthErrorRoute
   '/team-store/create': typeof ProtectedTeamStoreCreateRoute
@@ -110,6 +118,7 @@ export interface FileRoutesById {
   '/_protected/dashboard': typeof ProtectedDashboardRoute
   '/_protected/orders': typeof ProtectedOrdersRoute
   '/_protected/settings': typeof ProtectedSettingsRoute
+  '/_protected/tools': typeof ProtectedToolsRoute
   '/auth/confirm': typeof AuthConfirmRoute
   '/auth/error': typeof AuthErrorRoute
   '/_protected/team-store/create': typeof ProtectedTeamStoreCreateRoute
@@ -124,6 +133,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/orders'
     | '/settings'
+    | '/tools'
     | '/auth/confirm'
     | '/auth/error'
     | '/team-store/create'
@@ -136,6 +146,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/orders'
     | '/settings'
+    | '/tools'
     | '/auth/confirm'
     | '/auth/error'
     | '/team-store/create'
@@ -149,6 +160,7 @@ export interface FileRouteTypes {
     | '/_protected/dashboard'
     | '/_protected/orders'
     | '/_protected/settings'
+    | '/_protected/tools'
     | '/auth/confirm'
     | '/auth/error'
     | '/_protected/team-store/create'
@@ -208,6 +220,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProtectedSettingsRouteImport
       parentRoute: typeof ProtectedRoute
     }
+    '/_protected/tools': {
+      id: '/_protected/tools'
+      path: '/tools'
+      fullPath: '/tools'
+      preLoaderRoute: typeof ProtectedToolsRouteImport
+      parentRoute: typeof ProtectedRoute
+    }
     '/auth/confirm': {
       id: '/auth/confirm'
       path: '/auth/confirm'
@@ -250,6 +269,7 @@ interface ProtectedRouteChildren {
   ProtectedDashboardRoute: typeof ProtectedDashboardRoute
   ProtectedOrdersRoute: typeof ProtectedOrdersRoute
   ProtectedSettingsRoute: typeof ProtectedSettingsRoute
+  ProtectedToolsRoute: typeof ProtectedToolsRoute
   ProtectedTeamStoreCreateRoute: typeof ProtectedTeamStoreCreateRoute
   ProtectedTeamStoreCreateItemRoute: typeof ProtectedTeamStoreCreateItemRoute
   ProtectedTeamStoreIndexRoute: typeof ProtectedTeamStoreIndexRoute
@@ -259,6 +279,7 @@ const ProtectedRouteChildren: ProtectedRouteChildren = {
   ProtectedDashboardRoute: ProtectedDashboardRoute,
   ProtectedOrdersRoute: ProtectedOrdersRoute,
   ProtectedSettingsRoute: ProtectedSettingsRoute,
+  ProtectedToolsRoute: ProtectedToolsRoute,
   ProtectedTeamStoreCreateRoute: ProtectedTeamStoreCreateRoute,
   ProtectedTeamStoreCreateItemRoute: ProtectedTeamStoreCreateItemRoute,
   ProtectedTeamStoreIndexRoute: ProtectedTeamStoreIndexRoute,

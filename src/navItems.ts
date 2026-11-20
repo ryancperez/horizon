@@ -31,6 +31,7 @@ export const mainNav: NavItem[] = [
       { label: 'Create New Team Item', to: '/team-store/create-item' },
     ],
   },
+  {label: 'Tools', to: '/tools', icon: 'dashboard'}
 ]
 
 /** Bottom section, separated by a divider (like YouTube's Settings group). */
