@@ -1,14 +1,17 @@
 /// <reference types="vite/client" />
 import type { ReactNode } from 'react'
-import { HeadContent, Outlet, Scripts, createRootRoute } from '@tanstack/react-router'
+import { HeadContent, Outlet, Scripts, createRootRouteWithContext } from '@tanstack/react-router'
 
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 import { TanStackDevtools } from '@tanstack/react-devtools'
+import { ReactQueryDevtoolsPanel } from '@tanstack/react-query-devtools'
+
+import type { RouterContext } from '../router'
 
 import appCss from '../styles.css?url'
 import tailwindCss from '../tailwind.css?url'
 
-export const Route = createRootRoute({
+export const Route = createRootRouteWithContext<RouterContext>()({
   head: () => ({
     meta: [
       { charSet: 'utf-8' },
@@ -41,7 +44,10 @@ function RootDocument({ children }: { children: ReactNode }) {
         {children}
         <TanStackDevtools
           config={{ position: 'bottom-right' }}
-          plugins={[{ name: 'TanStack Router', render: <TanStackRouterDevtoolsPanel /> }]}
+          plugins={[
+            { name: 'TanStack Router', render: <TanStackRouterDevtoolsPanel /> },
+            { name: 'TanStack Query', render: <ReactQueryDevtoolsPanel /> },
+          ]}
         />
         <Scripts />
       </body>

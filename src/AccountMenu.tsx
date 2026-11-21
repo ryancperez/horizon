@@ -1,5 +1,6 @@
 import { useEffect, useId, useRef, useState } from 'react'
 import { useRouter } from '@tanstack/react-router'
+import { useQueryClient } from '@tanstack/react-query'
 import type { User } from '@supabase/supabase-js'
 
 import { supabase } from './lib/supabaseCilent'
@@ -8,6 +9,7 @@ import { Icon } from './sideBar'
 /** Avatar button in the top-right corner with the signed-in account and Sign out. */
 export function AccountMenu({ user }: { user: User }) {
   const router = useRouter()
+  const queryClient = useQueryClient()
   const [open, setOpen] = useState(false)
   const [signingOut, setSigningOut] = useState(false)
   const rootRef = useRef<HTMLDivElement>(null)
@@ -34,6 +36,8 @@ export function AccountMenu({ user }: { user: User }) {
   async function signOut() {
     setSigningOut(true)
     await supabase.auth.signOut()
+    // Drop cached data so the next person on this computer can't see it.
+    queryClient.clear()
     await router.invalidate()
     await router.navigate({ to: '/login' })
   }
